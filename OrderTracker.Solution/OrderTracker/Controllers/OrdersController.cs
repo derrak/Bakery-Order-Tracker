@@ -5,7 +5,7 @@ using OrderTracker.Models;
 
 namespace OrderTracker.Controllers
 {
-  public class ItemsController : Controller
+  public class OrdersController : Controller
   {
 
     [HttpGet("/vendors/{vendorId}/orders/new")]
@@ -16,9 +16,9 @@ namespace OrderTracker.Controllers
     }
 
     [HttpPost("/orders")]
-    public ActionResult Create(string description)
+    public ActionResult Create(string orderTitle, string orderDescription, string orderPrice, string orderDate)
     {
-      Order myOrder = new Order(description);
+      Order myOrder = new Order(orderTitle, orderDescription, orderPrice, orderDate);
       return RedirectToAction("Index");
     }
 

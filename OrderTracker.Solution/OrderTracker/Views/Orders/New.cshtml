@@ -1,11 +1,25 @@
 @{
   Layout = "_Layout";
 }
-  <h1>Add a new item to @Model.Name</h1>
+<h1>Add a new order to @Model.VendorName</h1>
 
-  <form action="/categories/@Model.Id/items" method="post">
-    <input id="categoryId" name="categoryId" type="hidden" value="@Model.Id">
-    <label for="itemDescription">Item Description</label>
-    <input id="itemDescription" name="itemDescription" type="text">
-    <button type='submit'>Add Item</button>
-  </form>
+<form action="/vendors/@Model.Id/orders/new" method="post">
+  <input id="vendorId" name="vendorId" type="hidden" value="@Model.Id">
+
+  <label for="orderTitle">Order Title</label>
+  <input id="orderTitle" name="orderTitle" type="text">
+<br>
+  <label for="orderDescription">Order Description</label>
+  <input id="orderDescription" name="orderDescription" type="text">
+<br>
+  <label for="orderPrice">Order Price</label>
+  <input id="orderPrice" name="orderPrice" type="text">
+<br>
+  <label for="orderDate">Order Date</label>
+  <input id="orderDate" name="orderDate" type="text">
+
+  @* //try to auto-generate date
+    <input id="orderDate" name="orderDate" type="text" value=DateTime.now> *@
+
+  <button type='submit'>Add Item</button>
+</form>

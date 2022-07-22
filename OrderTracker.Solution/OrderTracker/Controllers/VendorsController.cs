@@ -3,9 +3,9 @@ using System;
 using Microsoft.AspNetCore.Mvc;
 using OrderTracker.Models;
 
-namespace ToOrderTrackerDoList.Controllers
+namespace OrderTracker.Controllers
 {
-  public class CategoriesController : Controller
+  public class VendorsController : Controller
   {
     [HttpGet("/vendors")]
     public ActionResult Index()
@@ -21,9 +21,9 @@ namespace ToOrderTrackerDoList.Controllers
     }
 
     [HttpPost("/vendors")]
-    public ActionResult Create(string vendorName)
+    public ActionResult Create(string vendorName, string vendorDescription)
     {
-      Vendor newVendor = new Vendor(vendorName);
+      Vendor newVendor = new Vendor(vendorName, vendorDescription);
       return RedirectToAction("Index");
     }
 
@@ -33,22 +33,22 @@ namespace ToOrderTrackerDoList.Controllers
     {
       Dictionary<string, object> model = new Dictionary<string, object>();
       Vendor selectedVendor = Vendor.Find(id);
-      List<Order> vendorItems = selectedVendor.Orders;
+      List<Order> vendorOrders = selectedVendor.Orders;
       model.Add("vendor", selectedVendor);
-      model.Add("orders", vendorItems);
+      model.Add("order", vendorOrders);
       return View(model);
     }
 
     // This one creates new Orders within a given Vendor, not new Vendors:
-    [HttpPost("/vendors/{vendorId}/orders")]
-    public ActionResult Create(int vendorId, string orderDescription)
+    [HttpPost("/vendors/{vendorId}/orders/new")]
+    public ActionResult Create(int vendorId, string orderTitle, string orderDescription, string orderPrice, string orderDate)
     {
       Dictionary<string, object> model = new Dictionary<string, object>();
       Vendor foundVendor = Vendor.Find(vendorId);
-      Order newOrder = new Order(orderDescription);
+      Order newOrder = new Order(orderTitle, orderDescription, orderPrice, orderDate);
       foundVendor.AddOrder(newOrder);
-      List<Order> vendorItems = foundVendor.Orders;
-      model.Add("orders", vendorItems);
+      List<Order> vendorOrders = foundVendor.Orders;
+      model.Add("order", vendorOrders);
       model.Add("vendor", foundVendor);
       return View("Show", model);
     }
